@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using FluentAssertions;
+﻿using FluentAssertions;
 using NUnit.Framework;
 using XmppBot.Common;
 using XmppBot_RandomChatter;
@@ -16,11 +12,13 @@ namespace RandomChatter.Tests
         public void should_always_get_the_one_response()
         {
             // Default app.config; one response in file, 100% response chance
-            var plugin = new RandomChatterPlugin(); 
+            var plugin = new RandomChatterPlugin();
 
-            ParsedLine pl = new ParsedLine("This is a random line", "bob");
+            var pl = new ParsedLine("This is a random line", "bob");
 
-            plugin.Evaluate(pl).Should().Be("This is the only response in the file.", "Only one response in file, 100% chance");
+            plugin.Evaluate(pl)
+                  .Should()
+                  .Be("This is the only response in the file.", "Only one response in file, 100% chance");
         }
 
         [Test]
@@ -28,7 +26,7 @@ namespace RandomChatter.Tests
         {
             var plugin = new RandomChatterPlugin("zero_percent.config");
 
-            ParsedLine pl = new ParsedLine("This is a random line", "bob");
+            var pl = new ParsedLine("This is a random line", "bob");
 
             plugin.Evaluate(pl).Should().BeNull("Percent chance of response is zero");
         }
@@ -38,7 +36,7 @@ namespace RandomChatter.Tests
         {
             var plugin = new RandomChatterPlugin("no_responses.config");
 
-            ParsedLine pl = new ParsedLine("This is a random line", "bob");
+            var pl = new ParsedLine("This is a random line", "bob");
 
             plugin.Evaluate(pl).Should().BeNull("No responses in loaded file");
         }
